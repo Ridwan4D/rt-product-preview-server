@@ -29,6 +29,7 @@ async function run() {
         await client.connect();
 
         const userCollection = client.db("rtProductPreview").collection("users");
+        const productsCollection = client.db("rtProductPreview").collection("products");
 
 
         app.post('/users', async (req, res) => {
@@ -49,6 +50,11 @@ async function run() {
 
 
 
+        app.post('/products', async (req, res) => {
+            const productInfo = req.body;
+            const result = await productsCollection.insertOne(productInfo);
+            res.send(result);
+        })
 
 
         // Send a ping to confirm a successful connection
