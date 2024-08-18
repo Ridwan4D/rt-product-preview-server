@@ -32,6 +32,12 @@ async function run() {
         const productsCollection = client.db("rtProductPreview").collection("products");
 
 
+        // ========================================   user collection start    ========================================
+        app.get('/users', async (req, res) => {
+            const result = await userCollection.find().toArray();
+            res.send(result);
+        })
+
         app.post('/users', async (req, res) => {
             const user = req.body;
             const query = { userEmail: user.userEmail }
@@ -43,18 +49,27 @@ async function run() {
             res.send(result);
         })
 
+        // ========================================   user collection end    ========================================
 
 
 
 
 
 
+
+        // ========================================   packages collection start    ========================================
+        app.get('/products', async (req, res) => {
+            const result = await packageCollection.find().toArray();
+            res.send(result);
+        })
 
         app.post('/products', async (req, res) => {
             const productInfo = req.body;
             const result = await productsCollection.insertOne(productInfo);
             res.send(result);
         })
+
+        // ========================================   packages collection end    ========================================
 
 
         // Send a ping to confirm a successful connection
